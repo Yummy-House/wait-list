@@ -17,6 +17,7 @@ import chefHat from "./assets/chef-hat.png";
 import deliveryDining from "./assets/delivery-dining.png";
 import knifeandPlate from "./assets/knife-and-plate.png";
 import restaurantTable from "./assets/restaurant-table.png";
+import axios from "axios";
 
 const advertBody = [
   {
@@ -71,6 +72,8 @@ const surveyQuestions = [
     question: "How did you hear about us?",
     options: ["Social Media", "Friend", "Advertisement", "Other"],
     key: 1,
+    type: "radio",
+    otherPlaceholder: "Please specify",
   },
   {
     question: "Are you a restaurant owner or a food lover?",
@@ -86,6 +89,7 @@ const surveyQuestions = [
       "Personalized Recommendations",
       "Other",
     ],
+    type: "checkbox",
     otherPlaceholder: "Please specify",
     key: 3,
   },
@@ -102,15 +106,18 @@ function App() {
     question: string;
     options: string[];
     key: number;
+    type?: string;
     otherPlaceholder?: string;
   } | null>(null);
   const [openJoinWaitlist, setOpenJoinWaitlist] = useState(false);
   const [openSurvey, setOpenSurvey] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [surveyAnswers, setSurveyAnswers] = useState<Record<number, string>>(
+  const [surveyAnswers, setSurveyAnswers] = useState<Record<number, unknown>>(
     {}
   );
+  const [userEmail, setUserEmail] = useState<string>("");
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
+  const [checkboxAnswer, setCheckboxAnswer] = useState<string[]>([]);
   const [otherAnswer, setOtherAnswer] = useState<string>("");
 
   useEffect(() => {
@@ -127,9 +134,87 @@ function App() {
 
   const JoinWaitlist = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const email = e.currentTarget.email.value;
+    setUserEmail(email);
+
+    axios
+      .post("/waitlist", {
+        email: email,
+      })
+      .then(() => {
+        console.log("Waitlist joined successfully");
+      })
+      .catch((error) => {
+        console.error("Error joining waitlist:", error);
+      });
     setOpenJoinWaitlist(false);
     setOpenSurvey(true);
   }, []);
+
+  const submitSurvey = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      if (surveyquestion === null) {
+        // Start survey
+        setSurveyQuestion(surveyQuestions[0]);
+        setCurrentQuestionIndex(0);
+      } else {
+        // Save current answer
+        const answerToSave =
+          surveyquestion.type === "checkbox"
+            ? checkboxAnswer.length > 0
+              ? checkboxAnswer.includes("Other") && otherAnswer
+                ? [...checkboxAnswer.filter(item => item !== "Other"), otherAnswer]
+                : checkboxAnswer
+              : []
+            : selectedAnswer === "Other" && otherAnswer
+            ? otherAnswer
+            : selectedAnswer;
+
+        const updatedAnswers = {
+          ...surveyAnswers,
+          [surveyquestion.key]: answerToSave,
+        };
+
+        setSurveyAnswers(updatedAnswers);
+
+        // Check if this is the last question
+        if (currentQuestionIndex >= surveyQuestions.length - 1) {
+          // Survey complete
+          console.log("Survey completed:", updatedAnswers);
+
+          axios.post("/waitlist", {
+            email: userEmail,
+            survey: updatedAnswers,
+          });
+          setOpenSurvey(false);
+          setSurveyQuestion(null);
+          setCurrentQuestionIndex(0);
+          setSurveyAnswers({});
+          setSelectedAnswer("");
+          setCheckboxAnswer([]);
+          setOtherAnswer("");
+        } else {
+          // Go to next question
+          const nextIndex = currentQuestionIndex + 1;
+          setCurrentQuestionIndex(nextIndex);
+          setSurveyQuestion(surveyQuestions[nextIndex]);
+          setSelectedAnswer("");
+          setCheckboxAnswer([]);
+          setOtherAnswer("");
+        }
+      }
+    },
+    [
+      currentQuestionIndex,
+      selectedAnswer,
+      surveyAnswers,
+      surveyquestion,
+      otherAnswer,
+      userEmail,
+      checkboxAnswer
+    ]
+  );
 
   return (
     <>
@@ -175,6 +260,7 @@ function App() {
           <form onSubmit={JoinWaitlist} className="flex flex-col space-y-4">
             <input
               type="email"
+              name="email"
               placeholder="Enter your email address"
               required
               className="border rounded w-full h-12 ps-3 rounded-tl-4xl rounded-e-none border-[var(--primary-color)] focus:border-2 focus:bg-black bg-[var(--secondary-color)] focus:outline-none transition-all duration-300 ease-in-out text-white"
@@ -199,54 +285,13 @@ function App() {
               setCurrentQuestionIndex(0);
               setSurveyAnswers({});
               setSelectedAnswer("");
+              setCheckboxAnswer([]);
               setOtherAnswer("");
             }}
           >
             &times;
           </div>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              if (surveyquestion === null) {
-                // Start survey
-                setSurveyQuestion(surveyQuestions[0]);
-                setCurrentQuestionIndex(0);
-              } else {
-                // Save current answer
-                const answerToSave =
-                  selectedAnswer === "Other" && otherAnswer
-                    ? otherAnswer
-                    : selectedAnswer;
-                setSurveyAnswers((prev) => ({
-                  ...prev,
-                  [surveyquestion.key]: answerToSave,
-                }));
-
-                // Check if this is the last question
-                if (currentQuestionIndex >= surveyQuestions.length - 1) {
-                  // Survey complete
-                  console.log("Survey completed:", {
-                    ...surveyAnswers,
-                    [surveyquestion.key]: answerToSave,
-                  });
-                  setOpenSurvey(false);
-                  setSurveyQuestion(null);
-                  setCurrentQuestionIndex(0);
-                  setSurveyAnswers({});
-                  setSelectedAnswer("");
-                  setOtherAnswer("");
-                } else {
-                  // Go to next question
-                  const nextIndex = currentQuestionIndex + 1;
-                  setCurrentQuestionIndex(nextIndex);
-                  setSurveyQuestion(surveyQuestions[nextIndex]);
-                  setSelectedAnswer("");
-                  setOtherAnswer("");
-                }
-              }
-            }}
-            className="space-y-4"
-          >
+          <form onSubmit={submitSurvey} className="space-y-4">
             {surveyquestion === null ? (
               <div className="space-y-5">
                 <h2 className="text-xl font-bold">Quick Survey</h2>
@@ -278,12 +323,22 @@ function App() {
                         const prevIndex = currentQuestionIndex - 1;
                         setCurrentQuestionIndex(prevIndex);
                         setSurveyQuestion(surveyQuestions[prevIndex]);
-                        setSelectedAnswer(
-                          surveyAnswers[surveyQuestions[prevIndex].key] || ""
-                        );
+                        const prevAnswer = surveyAnswers[surveyQuestions[prevIndex].key];
+                        
+                        if (surveyQuestions[prevIndex].type === "checkbox") {
+                          setCheckboxAnswer(Array.isArray(prevAnswer) ? prevAnswer : []);
+                          setSelectedAnswer("");
+                        } else {
+                          setSelectedAnswer(String(prevAnswer) || "");
+                          setCheckboxAnswer([]);
+                        }
+                        setOtherAnswer("");
                       } else {
                         setSurveyQuestion(null);
                         setCurrentQuestionIndex(0);
+                        setSelectedAnswer("");
+                        setCheckboxAnswer([]);
+                        setOtherAnswer("");
                       }
                     }}
                     className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded"
@@ -307,12 +362,44 @@ function App() {
                       className="flex items-center space-x-2 cursor-pointer"
                     >
                       <input
-                        type="radio"
-                        name="survey-option"
-                        required
+                        type={surveyquestion.type ?? "radio"}
+                        name={
+                          surveyquestion.type === "checkbox"
+                            ? `survey-option-${surveyquestion.key}-${index}`
+                            : "survey-option"
+                        }
+                        required={
+                          surveyquestion.type === "checkbox" ? false : true
+                        }
                         value={option}
-                        checked={selectedAnswer === option}
-                        onChange={(e) => setSelectedAnswer(e.target.value)}
+                        checked={
+                          surveyquestion.type === "checkbox"
+                            ? checkboxAnswer.includes(option)
+                            : selectedAnswer === option
+                        }
+                        onChange={(e) => {
+                          if (surveyquestion.type === "checkbox") {
+                            let selected = [...checkboxAnswer];
+                            if (e.target.checked) {
+                              selected.push(option);
+                            } else {
+                              selected = selected.filter(
+                                (item) => item !== option
+                              );
+                            }
+                            setCheckboxAnswer(selected);
+                            // If "Other" is checked, show the input
+                            if (option === "Other" && e.target.checked) {
+                              setOtherAnswer("");
+                            }
+                          } else {
+                            setSelectedAnswer(e.target.value);
+                            setCheckboxAnswer([]);
+                            if (option === "Other") {
+                              setOtherAnswer("");
+                            }
+                          }
+                        }}
                         className="text-orange-500 focus:ring-orange-500"
                       />
                       <span>{option}</span>
@@ -320,8 +407,9 @@ function App() {
                   ))}
                 </div>
 
-                {selectedAnswer === "Other" &&
-                  surveyquestion.otherPlaceholder && (
+                {(surveyquestion.type === "checkbox"
+                          ? checkboxAnswer.includes("Other")
+                          : selectedAnswer === "Other") && surveyquestion.otherPlaceholder && (
                     <input
                       type="text"
                       required
@@ -335,8 +423,11 @@ function App() {
                 <button
                   type="submit"
                   disabled={
-                    !selectedAnswer ||
-                    (selectedAnswer === "Other" && !otherAnswer)
+                    surveyquestion.type === "checkbox"
+                      ? checkboxAnswer.length === 0 ||
+                        (checkboxAnswer.includes("Other") && !otherAnswer)
+                      : !selectedAnswer ||
+                        (selectedAnswer === "Other" && !otherAnswer)
                   }
                   className="button-fin text-white p-2 h-12 rounded-br-4xl w-full disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -405,6 +496,7 @@ function App() {
           >
             <input
               type="email"
+              name="email"
               required
               placeholder="Enter your email address"
               className="border rounded w-full h-full ps-3 rounded-tl-4xl rounded-e-none border-[var(--primary-color)] focus:border-2 focus:bg-black bg-[var(--secondary-color)] focus:outline-none transition-all duration-300 ease-in-out text-white"
