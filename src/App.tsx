@@ -4,6 +4,8 @@ import waitlistImg_1 from "./assets/waitlist-advert/1.png";
 import waitlistImg_2 from "./assets/waitlist-advert/2.png";
 import waitlistImg_3 from "./assets/waitlist-advert/3.png";
 import waitlistImg_4 from "./assets/waitlist-advert/4.png";
+import waitlistImg_5 from "./assets/waitlist-advert/5.png";
+import waitlistImg_6 from "./assets/waitlist-advert/6.png";
 
 import advertImg_1 from "./assets/advert/1.png";
 import advertImg_2 from "./assets/advert/2.png";
@@ -18,32 +20,49 @@ import restaurantTable from "./assets/restaurant-table.png";
 
 const advertBody = [
   {
-    tag: "Restaurant & Food lovers",
-    text: "Join our waitlist to be the first to know when we launch!",
-    subtext: "Don't miss out on exclusive updates!",
+    tag: "Restaurant",
+    text: "Are you a restaurant owner?",
+    subtext: "Ready to extend your reach and revenue with us?",
     image: waitlistImg_1,
     alt: "Delicious food",
   },
   {
     tag: "Food lovers",
-    text: "Get exclusive updates and offers by joining our waitlist!",
-    subtext: "Be the first to know about our delicious offerings!",
+    text: "Craving something delicious?",
+    subtext:
+      "Discover the best meals near you. Order now and satisfy your cravings in minutes!",
     image: waitlistImg_2,
     alt: "Tasty dishes",
   },
   {
+    tag: "Restaurant & Food lovers",
+    text: "Join our waitlist to be the first to know when we launch!",
+    subtext: "Don't miss out on exclusive updates!",
+    image: waitlistImg_6,
+    alt: "Delicious food",
+  },
+  {
     tag: "Restaurant",
-    text: "Be part of our community! Join the waitlist for Yummy House.",
-    subtext: "Stay updated with our latest news and offers!",
+    text: "Grow your restaurant beyond borders",
+    subtext:
+      "Join our platform and serve thousands of hungry customers near you.",
     image: waitlistImg_3,
-    alt: "Yummy House logo",
+    alt: "Grow your restaurant beyond borders",
   },
   {
     tag: "Food lovers",
-    text: "Don't miss out! Join our waitlist for exciting updates.",
-    subtext: "Get ready for a culinary adventure!",
+    text: "Too busy to cook?",
+    subtext:
+      "Let your favorite restaurants come to you. Fresh, fast, and just a tap away.",
     image: waitlistImg_4,
     alt: "Food lovers",
+  },
+  {
+    tag: "Restaurant & Food lovers",
+    text: "Get exclusive updates and offers by joining our waitlist!",
+    subtext: "Be the first to know about our delicious offerings!",
+    image: waitlistImg_5,
+    alt: "Tasty dishes",
   },
 ];
 
@@ -115,8 +134,15 @@ function App() {
   return (
     <>
       <header className="flex justify-between items-center md:me-10 me-2 z-50 relative md:h-32 h-20">
-        <img src="/logo-1.svg" alt="Yummy House logo" className="logo w-52 md:w-72" />
-        <button className="md:w-44 w-40 text-sm md:text-lg" onClick={() => setOpenJoinWaitlist(true)}>
+        <img
+          src="/logo-1.svg"
+          alt="Yummy House logo"
+          className="logo w-52 md:w-72"
+        />
+        <button
+          className="md:w-44 w-40 text-sm md:text-lg"
+          onClick={() => setOpenJoinWaitlist(true)}
+        >
           Join Waitlist
         </button>
       </header>
@@ -417,7 +443,11 @@ function App() {
           <div className="burger-bg md:py-20">
             <div className="bg-[#25201A] relative md:w-5/6 w-11/12 h-5/6 top-1/2 right-0 float-end transform -translate-y-1/2 flex flex-col justify-center items-center space-y-8 p-8 py-32">
               <div className="flex flex-row items-center justify-end space-x-8">
-                <img src={restaurantTable} alt="Restaurant Table" className="md:w-auto w-24" />
+                <img
+                  src={restaurantTable}
+                  alt="Restaurant Table"
+                  className="md:w-auto w-24"
+                />
                 <span className="space-y-2">
                   <div className="font-bold md:text-2xl text-xl">
                     Taste Meets Convenience
@@ -430,9 +460,15 @@ function App() {
               </div>
 
               <div className="flex flex-row items-center justify-end space-x-8">
-                <img src={knifeandPlate} alt="Knife and Plate" className="md:w-auto w-24" />
+                <img
+                  src={knifeandPlate}
+                  alt="Knife and Plate"
+                  className="md:w-auto w-24"
+                />
                 <span className="space-y-2">
-                  <div className="font-bold md:text-2xl text-xl">Dine Like Royalty</div>
+                  <div className="font-bold md:text-2xl text-xl">
+                    Dine Like Royalty
+                  </div>
                   <div className="w-11/12">
                     Explore top-rated restaurants and enjoy a fine dining
                     experience from the comfort of your home.
@@ -441,7 +477,11 @@ function App() {
               </div>
 
               <div className="flex flex-row items-center justify-end space-x-8">
-                <img src={deliveryDining} alt="Delivery Dining" className="md:w-auto w-24" />
+                <img
+                  src={deliveryDining}
+                  alt="Delivery Dining"
+                  className="md:w-auto w-24"
+                />
                 <span className="space-y-2">
                   <div className="font-bold md:text-2xl text-xl">
                     Fast & Reliable Delivery
@@ -478,7 +518,9 @@ function App() {
               className="h-full w-full object-cover"
             />
             <div className="absolute bottom-10 md:p-5 p-1 space-y-2">
-              <div className="font-bold md:text-4xl text-lg">Pizza so delicious</div>
+              <div className="font-bold md:text-4xl text-lg">
+                Pizza so delicious
+              </div>
               <div className="md:text-xl md:font-thin">
                 Melty cheese, crispy crusts, bold toppings a slice of happiness
                 in every bite
@@ -530,7 +572,9 @@ function App() {
           </a>
         </div>
         <div>
-          <p className="text-xs">&copy; 2023 Yummy House. All rights reserved.</p>
+          <p className="text-xs">
+            &copy; 2023 Yummy House. All rights reserved.
+          </p>
           <p className="md:text-sm text-xs font-thin md:block hidden">
             Discover, order, and track your favorite meals from local
             restaurants – all in one app.
