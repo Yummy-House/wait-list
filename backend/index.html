@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YummyHouse Waitlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .survey-question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .option {
+            margin-bottom: 8px;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 8px;
+        }
+        .other-input {
+            margin-top: 10px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .submit-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        .message {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍕 Join YummyHouse Waitlist</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">
+            Be the first to know when we launch our amazing food delivery app!
+        </p>
+        
+        <form id="waitlistForm">
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <!-- Survey Questions -->
+            <div class="survey-question">
+                <div class="question-title">How did you hear about us?</div>
+                <div class="option">
+                    <input type="radio" id="social" name="q1" value="Social Media">
+                    <label for="social">Social Media</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="friend" name="q1" value="Friend">
+                    <label for="friend">Friend</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="ad" name="q1" value="Advertisement">
+                    <label for="ad">Advertisement</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="other1" name="q1" value="Other">
+                    <label for="other1">Other</label>
+                </div>
+            </div>
+
+            <div class="survey-question">
+                <div class="question-title">Are you a restaurant owner or a food lover?</div>
+                <div class="option">
+                    <input type="radio" id="owner" name="q2" value="Restaurant Owner">
+                    <label for="owner">Restaurant Owner</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="lover" name="q2" value="Food Lover">
+                    <label for="lover">Food Lover</label>
+                </div>
+            </div>
+
+            <div class="survey-question">
+                <div class="question-title">What features would you like to see in our app?</div>
+                <div class="option">
+                    <input type="checkbox" id="ordering" name="q3" value="Online Ordering">
+                    <label for="ordering">Online Ordering</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="tracking" name="q3" value="Delivery Tracking">
+                    <label for="tracking">Delivery Tracking</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="reviews" name="q3" value="Restaurant Reviews">
+                    <label for="reviews">Restaurant Reviews</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="recommendations" name="q3" value="Personalized Recommendations">
+                    <label for="recommendations">Personalized Recommendations</label>
+                </div>
+                <div class="option">
+                    <input type="checkbox" id="other3" name="q3" value="Other">
+                    <label for="other3">Other</label>
+                    <input type="text" id="other3Text" class="other-input" placeholder="Please specify" style="display: none;">
+                </div>
+            </div>
+
+            <div class="survey-question">
+                <div class="question-title">How often do you order food online?</div>
+                <div class="option">
+                    <input type="radio" id="daily" name="q4" value="Daily">
+                    <label for="daily">Daily</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="weekly" name="q4" value="Weekly">
+                    <label for="weekly">Weekly</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="monthly" name="q4" value="Monthly">
+                    <label for="monthly">Monthly</label>
+                </div>
+                <div class="option">
+                    <input type="radio" id="rarely" name="q4" value="Rarely">
+                    <label for="rarely">Rarely</label>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">Join Waitlist</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        const surveyQuestions = [
+            {
+                question: "How did you hear about us?",
+                options: ["Social Media", "Friend", "Advertisement", "Other"],
+                key: 1,
+            },
+            {
+                question: "Are you a restaurant owner or a food lover?",
+                options: ["Restaurant Owner", "Food Lover"],
+                key: 2,
+            },
+            {
+                question: "What features would you like to see in our app?",
+                options: [
+                    "Online Ordering",
+                    "Delivery Tracking",
+                    "Restaurant Reviews",
+                    "Personalized Recommendations",
+                    "Other",
+                ],
+                otherPlaceholder: "Please specify",
+                key: 3,
+            },
+            {
+                question: "How often do you order food online?",
+                options: ["Daily", "Weekly", "Monthly", "Rarely"],
+                key: 4,
+            },
+        ];
+
+        // Show/hide other text input for question 3
+        document.getElementById('other3').addEventListener('change', function() {
+            const otherText = document.getElementById('other3Text');
+            if (this.checked) {
+                otherText.style.display = 'block';
+            } else {
+                otherText.style.display = 'none';
+                otherText.value = '';
+            }
+        });
+
+        document.getElementById('waitlistForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const messageDiv = document.getElementById('message');
+            const submitBtn = document.querySelector('.submit-btn');
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+            
+            // Collect form data
+            const formData = new FormData(this);
+            const email = formData.get('email');
+            
+            // Collect survey responses
+            const survey = {};
+            
+            // Question 1
+            const q1 = formData.get('q1');
+            if (q1) survey['1'] = q1;
+            
+            // Question 2
+            const q2 = formData.get('q2');
+            if (q2) survey['2'] = q2;
+            
+            // Question 3 (multiple choice)
+            const q3Values = formData.getAll('q3');
+            if (q3Values.length > 0) {
+                survey['3'] = q3Values;
+                // Add other text if specified
+                if (q3Values.includes('Other')) {
+                    const otherText = document.getElementById('other3Text').value;
+                    if (otherText) {
+                        survey['other_feedback'] = otherText;
+                    }
+                }
+            }
+            
+            // Question 4
+            const q4 = formData.get('q4');
+            if (q4) survey['4'] = q4;
+            
+            const data = {
+                email: email,
+                survey: survey
+            };
+            
+            try {
+                const response = await fetch('./api/waitlist.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    messageDiv.innerHTML = '<div class="message success">' + result.message + '</div>';
+                    this.reset();
+                    document.getElementById('other3Text').style.display = 'none';
+                } else {
+                    messageDiv.innerHTML = '<div class="message error">' + result.message + '</div>';
+                }
+            } catch (error) {
+                messageDiv.innerHTML = '<div class="message error">Network error. Please try again.</div>';
+            }
+            
+            // Re-enable submit button
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Join Waitlist';
+        });
+    </script>
+</body>
+</html>
