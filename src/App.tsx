@@ -218,14 +218,14 @@ function App() {
 
   return (
     <>
-      <header className="flex justify-between items-center md:me-10 me-2 z-50 relative md:h-32 h-20">
+      <header className="flex justify-between items-center md:me-6 me-2 z-50 relative md:h-24 h-20">
         <img
           src="/logo-1.svg"
           alt="Yummy House logo"
-          className="logo w-52 md:w-72"
+          className="logo w-52 md:w-56"
         />
         <button
-          className="md:w-44 w-40 text-sm md:text-lg"
+          className="w-38 text-sm md:text-md"
           onClick={() => setOpenJoinWaitlist(true)}
         >
           Join Waitlist
@@ -441,7 +441,7 @@ function App() {
         </dialog>
 
         <section
-          className="md:p-10 p-4 md:pt-22 pt-5 md:space-y-28 space-y-18"
+          className="md:p-8 p-4 md:pt-16 pt-5 md:space-y-24 space-y-18"
           style={{
             height: "calc(100vh - 8rem)",
           }}
@@ -474,7 +474,7 @@ function App() {
             </div>
 
             <h1
-              className="flex items-end md:text-3xl text-xl mb-8 relative z-10"
+              className="flex items-end md:text-2xl text-xl mb-8 relative z-10"
               style={{
                 fontFamily: "Island Moments, sans-serif",
                 color: "#FF6060",
@@ -483,41 +483,41 @@ function App() {
               {currentAdvert.tag}
               <hr className="md:w-80 w-40 md:m-4 m-3 ms-0" />
             </h1>
-            <p className="md:text-6xl text-5xl md:w-1/2 w-full mb-10 drop-shadow-md drop-shadow-amber-100 relative z-10">
+            <p className="text-5xl md:w-1/2 w-full mb-10 drop-shadow-md drop-shadow-amber-100 relative z-10">
               {currentAdvert.text}
             </p>
-            <p className="font-thin text-gray-300 md:text-3xl text-2xl drop-shadow-md drop-shadow-amber-100 relative z-10">
+            <p className="font-thin text-gray-300 text-2xl drop-shadow-md drop-shadow-amber-100 relative z-10">
               {currentAdvert.subtext}
             </p>
           </div>
           <form
             onSubmit={JoinWaitlist}
-            className="flex flex-row items-center lg:w-1/3 sm:w-2/3 w-full h-16 relative z-10"
+            className="flex flex-row items-center lg:w-1/3 sm:w-2/3 w-full h-13 relative z-10"
           >
             <input
               type="email"
               name="email"
               required
               placeholder="Enter your email address"
-              className="border rounded w-full h-full ps-3 rounded-tl-4xl rounded-e-none border-[var(--primary-color)] focus:border-2 focus:bg-black bg-[var(--secondary-color)] focus:outline-none transition-all duration-300 ease-in-out text-white"
+              className="border rounded w-full h-full ps-3 rounded-tl-4xl rounded-e-none border-[var(--primary-color)] focus:border-2 focus:bg-black bg-[var(--secondary-color)] focus:outline-none transition-all duration-300 ease-in-out text-white text-xs"
             />
             <input
               type="submit"
-              className="button-fin text-white p-2 h-full rounded-br-4xl w-40"
+              className="button-fin text-white p-2 h-full rounded-br-4xl w-40 text-sm"
               value={"Join Waitlist"}
             ></input>
           </form>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 top-0">
-          <div className="bg-[#130404] flex flex-col items-center justify-center space-y-12 text-center h-screen">
+          <div className="bg-[#130404] flex flex-col items-center justify-center space-y-12 text-center md:h-full h-screen">
             <img
               src={bonAppetitImg}
               alt="Bon Appetit"
-              className="drop-shadow-xl hover:scale-110 transition-transform duration-300 hover:drop-shadow-amber-800 md:w-96 w-1/2"
+              className="drop-shadow-xl hover:scale-110 transition-transform duration-300 hover:drop-shadow-amber-800 md:w-80 w-1/2"
             />
             <div
-              className="lg:text-9xl md:text-7xl text-6xl w-1/2 drop-shadow-xl hover:scale-110 transition-transform duration-300 hover:drop-shadow-amber-800"
+              className="lg:text-8xl md:text-7xl text-6xl w-1/2 drop-shadow-xl hover:scale-110 transition-transform duration-300 hover:drop-shadow-amber-800"
               style={{
                 fontFamily: "Tilt Prism, sans-serif",
                 fontWeight: "bold",
@@ -538,7 +538,7 @@ function App() {
                 <img
                   src={restaurantTable}
                   alt="Restaurant Table"
-                  className="md:w-auto w-24"
+                  className="md:w-34 w-24"
                 />
                 <span className="space-y-2">
                   <div className="font-bold md:text-2xl text-xl">
@@ -555,7 +555,7 @@ function App() {
                 <img
                   src={knifeandPlate}
                   alt="Knife and Plate"
-                  className="md:w-auto w-24"
+                  className="md:w-34 w-24"
                 />
                 <span className="space-y-2">
                   <div className="font-bold md:text-2xl text-xl">
@@ -572,7 +572,7 @@ function App() {
                 <img
                   src={deliveryDining}
                   alt="Delivery Dining"
-                  className="md:w-auto w-24"
+                  className="md:w-34 w-24"
                 />
                 <span className="space-y-2">
                   <div className="font-bold md:text-2xl text-xl">
