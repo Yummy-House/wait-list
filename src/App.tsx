@@ -486,7 +486,7 @@ function App() {
             <p className="text-5xl md:w-1/2 w-full mb-10 drop-shadow-md drop-shadow-amber-100 relative z-10">
               {currentAdvert.text}
             </p>
-            <p className="font-thin text-gray-300 text-2xl drop-shadow-md drop-shadow-amber-100 relative z-10">
+            <p className="font-thin text-gray-300 text-2xl drop-shadow-md drop-shadow-black relative z-10">
               {currentAdvert.subtext}
             </p>
           </div>
