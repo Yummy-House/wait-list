@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
-import waitlistImg_1 from "./assets/waitlist-advert/1.png";
-import waitlistImg_2 from "./assets/waitlist-advert/2.png";
-import waitlistImg_3 from "./assets/waitlist-advert/3.png";
-import waitlistImg_4 from "./assets/waitlist-advert/4.png";
-import waitlistImg_5 from "./assets/waitlist-advert/5.png";
-import waitlistImg_6 from "./assets/waitlist-advert/6.png";
+import waitlistImg_1 from "./assets/waitlist-advert/1.jpg";
+import waitlistImg_2 from "./assets/waitlist-advert/2.jpg";
+import waitlistImg_3 from "./assets/waitlist-advert/3.jpg";
+import waitlistImg_4 from "./assets/waitlist-advert/4.jpg";
+import waitlistImg_5 from "./assets/waitlist-advert/5.jpg";
+import waitlistImg_6 from "./assets/waitlist-advert/6.jpg";
 
-import advertImg_1 from "./assets/advert/1.png";
-import advertImg_2 from "./assets/advert/2.png";
-import advertImg_3 from "./assets/advert/3.png";
-import advertImg_4 from "./assets/advert/4.png";
+import advertImg_1 from "./assets/advert/1.jpg";
+import advertImg_2 from "./assets/advert/2.jpg";
+import advertImg_3 from "./assets/advert/3.jpg";
+import advertImg_4 from "./assets/advert/4.jpg";
 
 import bonAppetitImg from "./assets/bon-appetit.svg";
 import chefHat from "./assets/chef-hat.png";

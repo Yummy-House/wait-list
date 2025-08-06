@@ -59,7 +59,7 @@ button:focus-visible {
 
 
 .burger-bg {
-  background-image: url("./assets/burger.png");
+  background-image: url("./assets/burger.jpg");
   background-size: cover;
   background-position: center;
 }
