@@ -183,7 +183,7 @@ function App() {
           // Survey complete
           console.log("Survey completed:", updatedAnswers);
 
-          axios.post("/waitlist", {
+          axios.post("/waitlist.php", {
             email: userEmail,
             survey: updatedAnswers,
           });
