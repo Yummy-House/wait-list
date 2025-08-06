@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Include Composer autoloader for external dependencies
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
 // Include required classes directly
 require_once dirname(__DIR__) . '/src/EnvLoader.php';
 require_once dirname(__DIR__) . '/src/Database.php';

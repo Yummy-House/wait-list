@@ -12,8 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once __DIR__ . '/../includes/loader.php';
 require_once __DIR__ . '/../src/Waitlist.php';
+require_once __DIR__ . '/../src/EmailService.php';
 
 use App\Waitlist;
+use App\EmailService;
 
 // Only allow POST requests
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -42,9 +44,11 @@ try {
 
     // Initialize waitlist service
     $waitlist = new Waitlist($db);
+    $emailService = new EmailService($db);
     
-    // Create table if it doesn't exist
+    // Create tables if they don't exist
     $waitlist->createTable();
+    $emailService->createEmailLogTable();
 
     // Process the survey data
     $waitlistData = [
@@ -86,12 +90,21 @@ try {
     $result = $waitlist->addToWaitlist($waitlistData);
 
     if ($result['success']) {
+        // Send welcome email after successful registration
+        $emailResult = $emailService->sendWelcomeEmail($waitlistData['email'], $waitlistData);
+        
+        // Log email result but don't fail the registration if email fails
+        if (!$emailResult['success']) {
+            error_log("Failed to send welcome email to {$waitlistData['email']}: " . $emailResult['message']);
+        }
+        
         http_response_code(201);
         echo json_encode([
             'success' => true,
             'message' => 'Thank you for joining our waitlist! We\'ll notify you when we launch.',
             'data' => [
-                'id' => $result['id']
+                'id' => $result['id'] ?? null,
+                'email_sent' => $emailResult['success']
             ]
         ]);
     } else {

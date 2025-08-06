@@ -61,7 +61,8 @@ class Waitlist
 
 
             // Check if email already exists
-            if ($this->emailExists($data['email'])) {
+            $existingId = $this->getIdByEmail($data['email']);
+            if ($existingId) {
                 $sql = "UPDATE waitlist SET 
                             how_heard = ?, 
                             user_type = ?, 
@@ -84,7 +85,8 @@ class Waitlist
                 if ($result) {
                     return [
                         'success' => true,
-                        'message' => 'Waitlist entry updated successfully'
+                        'message' => 'Waitlist entry updated successfully',
+                        'id' => $existingId
                     ];
                 } else {
                     return [
@@ -143,6 +145,18 @@ class Waitlist
         $stmt = $this->connection->prepare($sql);
         $stmt->execute([$email]);
         return $stmt->rowCount() > 0;
+    }
+
+    /**
+     * Get ID by email address
+     */
+    private function getIdByEmail(string $email): ?int
+    {
+        $sql = "SELECT id FROM waitlist WHERE email = ? LIMIT 1";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$email]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? (int)$result['id'] : null;
     }
 
     /**
