@@ -138,7 +138,7 @@ function App() {
     setUserEmail(email);
 
     axios
-      .post("/waitlist", {
+      .post("/waitlist.php", {
         email: email,
       })
       .then(() => {
