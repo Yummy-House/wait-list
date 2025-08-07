@@ -119,6 +119,8 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
   const [checkboxAnswer, setCheckboxAnswer] = useState<string[]>([]);
   const [otherAnswer, setOtherAnswer] = useState<string>("");
+  const [showThankYou, setShowThankYou] = useState(false);
+  const [thankYouMessage, setThankYouMessage] = useState<string>("");
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -194,6 +196,10 @@ function App() {
           setSelectedAnswer("");
           setCheckboxAnswer([]);
           setOtherAnswer("");
+          
+          // Show thank you message for completing survey
+          setThankYouMessage("Thank you for joining our waitlist and completing our survey! We appreciate your feedback and can't wait to share exciting updates with you soon.");
+          setShowThankYou(true);
         } else {
           // Go to next question
           const nextIndex = currentQuestionIndex + 1;
@@ -233,12 +239,13 @@ function App() {
       </header>
       <main>
         {/* Dialog Backdrop */}
-        {(openJoinWaitlist || openSurvey) && (
+        {(openJoinWaitlist || openSurvey || showThankYou) && (
           <div
             className="fixed inset-0 bg-black/50 z-50"
             onClick={() => {
               setOpenJoinWaitlist(false);
               setOpenSurvey(false);
+              setShowThankYou(false);
             }}
           ></div>
         )}
@@ -287,6 +294,7 @@ function App() {
               setSelectedAnswer("");
               setCheckboxAnswer([]);
               setOtherAnswer("");
+              setShowThankYou(false);
             }}
           >
             &times;
@@ -307,7 +315,11 @@ function App() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setOpenSurvey(false)}
+                  onClick={() => {
+                    setOpenSurvey(false);
+                    setThankYouMessage("Thank you for joining our waitlist! We'll keep you updated with the latest news and exclusive offers.");
+                    setShowThankYou(true);
+                  }}
                   className="bg-gray-600 hover:bg-gray-700 text-white p-2 h-12 rounded w-full"
                 >
                   Skip Survey
@@ -438,6 +450,28 @@ function App() {
               </div>
             )}
           </form>
+        </dialog>
+
+        <dialog
+          open={showThankYou}
+          className="bg-[var(--secondary-color)] text-white p-6 rounded-lg shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-96"
+        >
+          <div
+            className="absolute top-0 right-2 text-gray-500 hover:text-gray-700 text-2xl cursor-pointer"
+            onClick={() => setShowThankYou(false)}
+          >
+            &times;
+          </div>
+          <h2 className="text-2xl font-bold mb-4">🎉 Thank You!</h2>
+          <p className="mb-6 text-gray-300 leading-relaxed">
+            {thankYouMessage}
+          </p>
+          <button
+            onClick={() => setShowThankYou(false)}
+            className="button-fin text-white p-2 h-12 rounded-br-4xl w-full"
+          >
+            Close
+          </button>
         </dialog>
 
         <section
